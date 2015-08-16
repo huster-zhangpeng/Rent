@@ -32,7 +32,8 @@ class GanjiSpider(scrapy.Spider):
 
     def parsePage(self, response):
         rentHouse = ItemLoader(item = RentItem(), response = response)
-        rentHouse.add_value('id', response.url.split('/')[-1].split('.')[0])
+        rentHouse.add_value('id', self.name + '-' +
+                            response.url.split('/')[-1].split('.')[0])
         rentHouse.add_value('link', response.url)
         rentHouse.add_xpath('title', "//h1[@class = 'title-name']/text()")
         return rentHouse.load_item()
